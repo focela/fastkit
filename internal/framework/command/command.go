@@ -1,7 +1,16 @@
-// Copyright (c) 2024 Focela Technologies
-// Internal Use Only - Unauthorized use prohibited
-// Contact: legal@focela.com
+/*
+FOCELA TECHNOLOGIES INTERNAL USE ONLY LICENSE AGREEMENT
 
+Copyright (c) 2024 Focela Technologies. All rights reserved.
+
+Permission is hereby granted to employees or authorized personnel of Focela
+Technologies (the "Company") to use this software solely for internal business
+purposes within the Company.
+
+For inquiries or permissions, please contact: legal@focela.com
+*/
+
+// Package command provides console operations, like options/arguments reading.
 package command
 
 import (
@@ -10,15 +19,13 @@ import (
 	"strings"
 )
 
-// Default variables for parsed arguments and options.
 var (
 	defaultParsedArgs    = make([]string, 0)
 	defaultParsedOptions = make(map[string]string)
-	argumentOptionRegex  = regexp.MustCompile(`^\-{1,2}([\w\?\.\-]+)(=)?(.*)$`)
+	argumentOptionRegex  = regexp.MustCompile(`^-{1,2}([\w\?\.\-]+)(=)?(.*)$`)
 )
 
-// Init initializes the argument and option parsing process.
-// If no arguments are provided, it uses `os.Args` as default input.
+// Init initializes argument parsing. If no arguments are provided, it defaults to os.Args.
 func Init(args ...string) {
 	if len(args) == 0 {
 		if len(defaultParsedArgs) == 0 && len(defaultParsedOptions) == 0 {
@@ -27,48 +34,41 @@ func Init(args ...string) {
 			return
 		}
 	} else {
-		// Reset default parsed arguments and options.
 		defaultParsedArgs = make([]string, 0)
 		defaultParsedOptions = make(map[string]string)
 	}
 	defaultParsedArgs, defaultParsedOptions = ParseUsingDefaultAlgorithm(args...)
 }
 
-// ParseUsingDefaultAlgorithm parses arguments into positional arguments and options.
-// Example:
-//
-//	Input: ["-a", "--key=value", "arg1"]
-//	Output: parsedArgs = ["arg1"], parsedOptions = {"a": "", "key": "value"}
+// ParseUsingDefaultAlgorithm parses command-line arguments and options.
 func ParseUsingDefaultAlgorithm(args ...string) (parsedArgs []string, parsedOptions map[string]string) {
 	parsedArgs = make([]string, 0)
 	parsedOptions = make(map[string]string)
 
-	for i := 0; i < len(args); {
-		matches := argumentOptionRegex.FindStringSubmatch(args[i])
-		if len(matches) > 2 {
-			if matches[2] == "=" {
-				parsedOptions[matches[1]] = matches[3]
-			} else if i < len(args)-1 && len(args[i+1]) > 0 && args[i+1][0] != '-' {
-				parsedOptions[matches[1]] = args[i+1]
-				i += 2
-				continue
+	for i := 0; i < len(args); i++ {
+		array := argumentOptionRegex.FindStringSubmatch(args[i])
+		if len(array) > 2 {
+			if array[2] == "=" {
+				parsedOptions[array[1]] = array[3]
+			} else if i < len(args)-1 && args[i+1][0] != '-' {
+				parsedOptions[array[1]] = args[i+1]
+				i++
 			} else {
-				parsedOptions[matches[1]] = matches[3]
+				parsedOptions[array[1]] = array[3]
 			}
 		} else {
 			parsedArgs = append(parsedArgs, args[i])
 		}
-		i++
 	}
+
 	return
 }
 
-// GetOpt retrieves the value of the option with the specified `name`.
-// Returns the default value `def` if the option does not exist.
+// GetOpt retrieves the value of a specific option by name.
 func GetOpt(name string, def ...string) string {
 	Init()
-	if value, exists := defaultParsedOptions[name]; exists {
-		return value
+	if v, ok := defaultParsedOptions[name]; ok {
+		return v
 	}
 	if len(def) > 0 {
 		return def[0]
@@ -76,21 +76,20 @@ func GetOpt(name string, def ...string) string {
 	return ""
 }
 
-// GetOptAll retrieves all parsed options as a map.
+// GetOptAll returns all parsed options.
 func GetOptAll() map[string]string {
 	Init()
 	return defaultParsedOptions
 }
 
-// ContainsOpt checks if an option with the specified `name` exists.
+// ContainsOpt checks if a specific option exists.
 func ContainsOpt(name string) bool {
 	Init()
-	_, exists := defaultParsedOptions[name]
-	return exists
+	_, ok := defaultParsedOptions[name]
+	return ok
 }
 
-// GetArg retrieves the argument at the specified `index`.
-// Returns the default value `def` if the index is out of range.
+// GetArg retrieves the argument at a given index.
 func GetArg(index int, def ...string) string {
 	Init()
 	if index < len(defaultParsedArgs) {
@@ -102,27 +101,23 @@ func GetArg(index int, def ...string) string {
 	return ""
 }
 
-// GetArgAll retrieves all parsed arguments as a slice.
+// GetArgAll returns all parsed arguments.
 func GetArgAll() []string {
 	Init()
 	return defaultParsedArgs
 }
 
-// GetOptWithEnv retrieves the value of a command-line option or environment variable.
-// - Command-line arguments are in lowercase format (e.g., `key.option`).
-// - Environment variables are in uppercase format (e.g., `KEY_OPTION`).
-// Returns the default value `def` if neither exists.
+// GetOptWithEnv retrieves the command line argument or fallback environment variable.
+// Priority: Command-line argument > Environment variable > Default value.
 func GetOptWithEnv(key string, def ...string) string {
 	cmdKey := strings.ToLower(strings.ReplaceAll(key, "_", "."))
 	if ContainsOpt(cmdKey) {
 		return GetOpt(cmdKey)
 	}
-
 	envKey := strings.ToUpper(strings.ReplaceAll(key, ".", "_"))
-	if value, exists := os.LookupEnv(envKey); exists {
-		return value
+	if r, ok := os.LookupEnv(envKey); ok {
+		return r
 	}
-
 	if len(def) > 0 {
 		return def[0]
 	}
