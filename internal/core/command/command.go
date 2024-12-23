@@ -10,8 +10,8 @@
  * For inquiries or permissions, please contact: legal@focela.com
  */
 
-// Package cli provides console operations, like options/arguments reading.
-package cli
+// Package command provides tools for parsing and managing command-line arguments, options, and environment variables.
+package command
 
 import (
 	"os"
@@ -19,15 +19,14 @@ import (
 	"strings"
 )
 
-// Global variables
 var (
-	defaultParsedArgs    []string
-	defaultParsedOptions map[string]string
-	argumentOptionRegex  = regexp.MustCompile(`^\-{1,2}([\w\?\.\-]+)(=){0,1}(.*)$`)
+	defaultParsedArgs    = make([]string, 0)
+	defaultParsedOptions = make(map[string]string)
+	argumentOptionRegex  = regexp.MustCompile(`^\-{1,2}([\w\?\.\-]+)(=)?(.*)$`)
 )
 
-// Init initializes CLI argument parsing.
-// It resets parsed arguments and options if they already exist.
+// Init initializes command arguments and options.
+// If no arguments are provided, it defaults to os.Args.
 func Init(args ...string) {
 	if len(args) == 0 {
 		if len(defaultParsedArgs) == 0 && len(defaultParsedOptions) == 0 {
@@ -42,32 +41,31 @@ func Init(args ...string) {
 	defaultParsedArgs, defaultParsedOptions = ParseUsingDefaultAlgorithm(args...)
 }
 
-// ParseUsingDefaultAlgorithm parses command-line arguments into options and arguments.
+// ParseUsingDefaultAlgorithm parses command-line arguments and options.
+// Supports both single-dash and double-dash options.
 func ParseUsingDefaultAlgorithm(args ...string) (parsedArgs []string, parsedOptions map[string]string) {
 	parsedArgs = []string{}
 	parsedOptions = map[string]string{}
 
-	for i := 0; i < len(args); {
+	for i := 0; i < len(args); i++ {
 		array := argumentOptionRegex.FindStringSubmatch(args[i])
 		if len(array) > 2 {
 			if array[2] == "=" {
 				parsedOptions[array[1]] = array[3]
 			} else if i < len(args)-1 && len(args[i+1]) > 0 && args[i+1][0] != '-' {
 				parsedOptions[array[1]] = args[i+1]
-				i += 2
-				continue
+				i++
 			} else {
 				parsedOptions[array[1]] = array[3]
 			}
 		} else {
 			parsedArgs = append(parsedArgs, args[i])
 		}
-		i++
 	}
 	return
 }
 
-// GetOpt retrieves the value of the specified option.
+// GetOpt retrieves the value of a command-line option by its name.
 // If the option does not exist, it returns the default value if provided.
 func GetOpt(name string, def ...string) string {
 	Init()
@@ -80,21 +78,21 @@ func GetOpt(name string, def ...string) string {
 	return ""
 }
 
-// GetOptAll returns all parsed options as a map.
+// GetOptAll retrieves all parsed options as a map.
 func GetOptAll() map[string]string {
 	Init()
 	return defaultParsedOptions
 }
 
-// ContainsOpt checks if a specific option exists in the parsed options.
+// ContainsOpt checks whether an option exists in the parsed arguments.
 func ContainsOpt(name string) bool {
 	Init()
 	_, ok := defaultParsedOptions[name]
 	return ok
 }
 
-// GetArg retrieves the argument at the specified index.
-// If the index is out of bounds, it returns the default value if provided.
+// GetArg retrieves an argument by its index.
+// If the index is out of range, it returns the default value if provided.
 func GetArg(index int, def ...string) string {
 	Init()
 	if index < len(defaultParsedArgs) {
@@ -106,14 +104,15 @@ func GetArg(index int, def ...string) string {
 	return ""
 }
 
-// GetArgAll returns all parsed arguments as a slice.
+// GetArgAll retrieves all parsed arguments as a slice.
 func GetArgAll() []string {
 	Init()
 	return defaultParsedArgs
 }
 
-// GetOptWithEnv retrieves a value from the command-line options or environment variables.
-// If neither exists, it returns the default value if provided.
+// GetOptWithEnv retrieves the value of a command-line option or environment variable.
+// Command-line keys are lowercase (e.g., altura.package.variable).
+// Environment variable keys are uppercase (e.g., ALTURA_PACKAGE_VARIABLE).
 func GetOptWithEnv(key string, def ...string) string {
 	cmdKey := strings.ToLower(strings.ReplaceAll(key, "_", "."))
 	if ContainsOpt(cmdKey) {
