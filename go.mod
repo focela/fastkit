@@ -1,3 +1,3 @@
-module github.com/focela/altura
+module github.com/focela/loom
 
 go 1.23
