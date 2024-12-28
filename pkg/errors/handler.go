@@ -7,19 +7,12 @@ package errors
 
 import (
 	"errors"
+	"fmt"
 	"runtime"
 	"strings"
 
 	"github.com/focela/loom/pkg/errors/code"
 )
-
-// Error represents a custom error with additional features.
-type Error struct {
-	error error     // Wrapped error.
-	stack stack     // Stack array, records stack trace information when error is created.
-	text  string    // Custom error message, may be empty if a code is provided.
-	code  code.Code // Associated error code.
-}
 
 const (
 	// stackFilterKeyLocal filters paths for the current error module.
@@ -35,6 +28,14 @@ func init() {
 	if goRootForFilter != "" {
 		goRootForFilter = strings.ReplaceAll(goRootForFilter, "\\", "/")
 	}
+}
+
+// Error represents a custom error with additional features.
+type Error struct {
+	error error     // Wrapped error.
+	stack stack     // Stack array, records stack trace information when error is created.
+	text  string    // Custom error message, may be empty if a code is provided.
+	code  code.Code // Associated error code.
 }
 
 // Error returns the error message as a string.
@@ -102,4 +103,19 @@ func (err *Error) Unwrap() error {
 		return nil
 	}
 	return err.error
+}
+
+// Equal compares the current error with another error instance.
+// Errors are considered equal if their `code` and `text` are identical.
+func (err *Error) Equal(target error) bool {
+	if err == target {
+		return true
+	}
+	if err.code != Code(target) {
+		return false
+	}
+	if err.text != fmt.Sprintf(`%-s`, target) {
+		return false
+	}
+	return true
 }
