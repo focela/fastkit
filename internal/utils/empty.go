@@ -33,7 +33,7 @@ type TimeHandler interface {
 	IsZero() bool
 }
 
-// IsEmpty checks whether the given value is considered empty.
+// IsItEmpty checks whether the given value is considered empty.
 //
 // Parameters:
 // - value: The input value to check.
@@ -45,7 +45,7 @@ type TimeHandler interface {
 // Note:
 // - A value is considered empty if it is 0, nil, false, "", or has a zero length (e.g., slice, map, or chan).
 // - This function may use reflection, which can impact performance.
-func IsEmpty(value interface{}, traceSource ...bool) bool {
+func IsItEmpty(value interface{}, traceSource ...bool) bool {
 	if value == nil {
 		return true
 	}
@@ -100,14 +100,14 @@ func IsEmpty(value interface{}, traceSource ...bool) bool {
 	case reflect.Struct:
 		for i := 0; i < rv.NumField(); i++ {
 			fieldValue, _ := kernel.ValueToInterface(rv.Field(i))
-			if !IsEmpty(fieldValue) {
+			if !IsItEmpty(fieldValue) {
 				return false
 			}
 		}
 		return true
 	case reflect.Ptr:
 		if len(traceSource) > 0 && traceSource[0] {
-			return IsEmpty(rv.Elem())
+			return IsItEmpty(rv.Elem())
 		}
 		return rv.IsNil()
 	default:
@@ -115,7 +115,7 @@ func IsEmpty(value interface{}, traceSource ...bool) bool {
 	}
 }
 
-// IsNil checks whether the given value is nil.
+// IsItNil checks whether the given value is nil.
 //
 // Parameters:
 // - value: The input value to check.
@@ -126,7 +126,7 @@ func IsEmpty(value interface{}, traceSource ...bool) bool {
 //
 // Note:
 // - This function works for interface{} types and uses reflection to determine if the value is nil.
-func IsNil(value interface{}, traceSource ...bool) bool {
+func IsItNil(value interface{}, traceSource ...bool) bool {
 	if value == nil {
 		return true
 	}
