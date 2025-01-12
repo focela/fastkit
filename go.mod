@@ -1,3 +1,3 @@
-module github.com/focela/aegis
+module focela.com/aegis
 
 go 1.23
