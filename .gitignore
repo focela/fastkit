@@ -1,0 +1,123 @@
+### IntelliJ and JetBrains IDEs ###
+# Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm, CLion, Android Studio, WebStorm, and Rider
+# Reference: https://intellij-support.jetbrains.com/hc/en-us/articles/206544839
+
+# User-specific files
+.idea/**/dictionaries
+.idea/**/shelf
+.idea/**/tasks.xml
+.idea/**/usage.statistics.xml
+.idea/**/workspace.xml
+.idea/**/aws.xml
+
+# Generated and sensitive files
+.idea/**/contentModel.xml
+.idea/**/dataSources.ids
+.idea/**/dataSources.local.xml
+.idea/**/dataSources.xml
+.idea/**/dataSources/
+.idea/**/dbnavigator.xml
+.idea/**/dynamic.xml
+.idea/**/sqlDataSources.xml
+.idea/**/uiDesigner.xml
+
+# Build system and dependencies
+.idea/**/gradle.xml
+.idea/**/libraries
+cmake-build-*/
+
+# Plugins and additional features
+.idea/**/mongoSettings.xml
+.idea/**/sonarlint/
+.idea/**/sonarIssues.xml
+.idea/**/markdown-navigator-enh.xml
+.idea/**/markdown-navigator.xml
+.idea/**/markdown-navigator/
+.idea/**/codestream.xml
+.idea/**/azureSettings.xml
+.idea/**/httpRequests
+
+# Project-specific files
+.idea_modules/
+.idea/replstate.xml
+.idea/caches/build_file_checksums.ser
+.idea/$CACHE_FILE$
+.idea/misc.xml
+modules.xml
+
+# IntelliJ Patch
+# Reference: https://github.com/joeblau/gitignore.io/issues/186#issuecomment-215987721
+*.iml
+*.ipr
+
+# External integrations
+atlassian-ide-plugin.xml  # JIRA plugin
+com_crashlytics_export_strings.xml  # Crashlytics
+crashlytics-build.properties
+crashlytics.properties
+fabric.properties
+
+### macOS System Files ###
+# Covers: macOS
+# Reference: https://github.com/github/gitignore/blob/master/Global/macOS.gitignore
+
+.AppleDouble
+.DS_Store
+.idea
+.LSOverride
+Icon
+._
+
+# Files that might appear in the root of a volume
+.com.apple.timemachine.donotpresent
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+
+# Directories potentially created on remote AFP share
+.apdisk
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+
+# SSL directories
+.well-known
+
+### Environment and Configuration ###
+.env
+
+### Logs and Temporary Files ###
+*.log
+*.tmp
+
+### Docker and Kubernetes ###
+.dockerignore
+.kube/
+
+### Go Specific Files ###
+# Covers: Go
+# Reference: https://github.com/github/gitignore/blob/main/Go.gitignore
+
+# Binaries for programs and plugins
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# Test binary, built with `go test -c`
+*.test
+
+# Output of the go coverage tool, specifically when used with LiteIDE
+*.out
+
+# Dependency directories
+vendor/
+
+# Go workspace files
+go.work
+go.work.sum
