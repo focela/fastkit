@@ -1,107 +1,81 @@
-### IntelliJ and JetBrains IDEs ###
-# Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm, CLion, Android Studio, WebStorm, and Rider
-# Reference: https://intellij-support.jetbrains.com/hc/en-us/articles/206544839
-
-# User-specific files
+# JetBrains IDEs (IntelliJ, WebStorm, etc.)
+.idea/
+.idea/$CACHE_FILE$
+.idea/**/aws.xml
+.idea/**/azureSettings.xml
+.idea/**/codestream.xml
+.idea/**/contentModel.xml
+.idea/**/dbnavigator.xml
 .idea/**/dictionaries
+.idea/**/dynamic.xml
+.idea/**/gradle.xml
+.idea/**/httpRequests
+.idea/**/libraries
+.idea/**/markdown-navigator/
+.idea/**/mongoSettings.xml
 .idea/**/shelf
+.idea/**/sonarIssues.xml
+.idea/**/sonarlint/
+.idea/**/sqlDataSources.xml
 .idea/**/tasks.xml
+.idea/**/uiDesigner.xml
 .idea/**/usage.statistics.xml
 .idea/**/workspace.xml
-.idea/**/aws.xml
-
-# Generated and sensitive files
-.idea/**/contentModel.xml
-.idea/**/dataSources.ids
-.idea/**/dataSources.local.xml
-.idea/**/dataSources.xml
-.idea/**/dataSources/
-.idea/**/dbnavigator.xml
-.idea/**/dynamic.xml
-.idea/**/sqlDataSources.xml
-.idea/**/uiDesigner.xml
-
-# Build system and dependencies
-.idea/**/gradle.xml
-.idea/**/libraries
-cmake-build-*/
-
-# Plugins and additional features
-.idea/**/mongoSettings.xml
-.idea/**/sonarlint/
-.idea/**/sonarIssues.xml
-.idea/**/markdown-navigator-enh.xml
-.idea/**/markdown-navigator.xml
-.idea/**/markdown-navigator/
-.idea/**/codestream.xml
-.idea/**/azureSettings.xml
-.idea/**/httpRequests
-
-# Project-specific files
-.idea_modules/
-.idea/replstate.xml
 .idea/caches/build_file_checksums.ser
-.idea/$CACHE_FILE$
 .idea/misc.xml
+.idea/replstate.xml
+.idea_modules/
 modules.xml
 
-# IntelliJ Patch
-# Reference: https://github.com/joeblau/gitignore.io/issues/186#issuecomment-215987721
+# IntelliJ Project Files
 *.iml
 *.ipr
 
-# External integrations
-atlassian-ide-plugin.xml  # JIRA plugin
-com_crashlytics_export_strings.xml  # Crashlytics
+# External Plugins
+atlassian-ide-plugin.xml
+com_crashlytics_export_strings.xml
 crashlytics-build.properties
 crashlytics.properties
 fabric.properties
 
-### macOS System Files ###
-# Covers: macOS
-# Reference: https://github.com/github/gitignore/blob/master/Global/macOS.gitignore
-
-.AppleDouble
-.DS_Store
-.idea
-.LSOverride
-Icon
+# macOS System Files
 ._
-
-# Files that might appear in the root of a volume
+.apdisk
+.AppleDB
+.AppleDesktop
+.AppleDouble
 .com.apple.timemachine.donotpresent
 .DocumentRevisions-V100
+.DS_Store
 .fseventsd
+.LSOverride
 .Spotlight-V100
 .TemporaryItems
 .Trashes
 .VolumeIcon.icns
-
-# Directories potentially created on remote AFP share
-.apdisk
-.AppleDB
-.AppleDesktop
+Icon
 Network Trash Folder
 Temporary Items
 
-# SSL directories
+# SSL and Security
 .well-known
 
-### Environment and Configuration ###
+# Environment and Configuration
 .env
 
-### Logs and Temporary Files ###
+# Logs and Temporary Files
 *.log
 *.tmp
+logs/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
 
-### Docker and Kubernetes ###
+# Docker and Kubernetes
 .dockerignore
 .kube/
 
-### Go Specific Files ###
-# Covers: Go
-# Reference: https://github.com/github/gitignore/blob/main/Go.gitignore
-
+# Go Specific Files
 # Binaries for programs and plugins
 *.exe
 *.exe~
