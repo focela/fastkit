@@ -1,5 +1,7 @@
+# IDE-SPECIFIC FILES
 # JetBrains IDEs (IntelliJ, WebStorm, etc.)
 .idea/
+.idea_modules/
 .idea/$CACHE_FILE$
 .idea/**/aws.xml
 .idea/**/azureSettings.xml
@@ -24,29 +26,30 @@
 .idea/caches/build_file_checksums.ser
 .idea/misc.xml
 .idea/replstate.xml
-.idea_modules/
 modules.xml
 
-# IntelliJ Project Files
+# IntelliJ project files
 *.iml
 *.ipr
 
-# External Plugins
+# EXTERNAL PLUGINS / THIRD-PARTY FILES
+# Atlassian, Crashlytics, Fabric, etc.
 atlassian-ide-plugin.xml
 com_crashlytics_export_strings.xml
 crashlytics-build.properties
 crashlytics.properties
 fabric.properties
 
-# macOS System Files
-._
+# OS-SPECIFIC FILES
+# macOS system files
+.DS_Store
 .apdisk
+._*
 .AppleDB
 .AppleDesktop
 .AppleDouble
 .com.apple.timemachine.donotpresent
 .DocumentRevisions-V100
-.DS_Store
 .fseventsd
 .LSOverride
 .Spotlight-V100
@@ -57,13 +60,15 @@ Icon
 Network Trash Folder
 Temporary Items
 
-# SSL and Security
-.well-known
+# PROJECT CONFIG / SECRETS
+# SSL and security-related
+.well-known/
 
-# Environment and Configuration
+# Local environment configuration
 .env
 
-# Logs and Temporary Files
+# LOGS / TEMP FILES
+# Log and temp files
 *.log
 *.tmp
 logs/
@@ -71,11 +76,11 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-# Docker and Kubernetes
+# DOCKER / KUBERNETES
 .dockerignore
 .kube/
 
-# Go Specific Files
+# GO-SPECIFIC FILES
 # Binaries for programs and plugins
 *.exe
 *.exe~
@@ -86,12 +91,10 @@ yarn-error.log*
 # Test binary, built with `go test -c`
 *.test
 
-# Output of the go coverage tool, specifically when used with LiteIDE
+# Output from go coverage tool
 *.out
 
-# Dependency directories
+# Go workspace and dependency files
 vendor/
-
-# Go workspace files
 go.work
 go.work.sum
