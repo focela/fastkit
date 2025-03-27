@@ -79,22 +79,3 @@ yarn-error.log*
 # DOCKER / KUBERNETES
 .dockerignore
 .kube/
-
-# GO-SPECIFIC FILES
-# Binaries for programs and plugins
-*.exe
-*.exe~
-*.dll
-*.so
-*.dylib
-
-# Test binary, built with `go test -c`
-*.test
-
-# Output from go coverage tool
-*.out
-
-# Go workspace and dependency files
-vendor/
-go.work
-go.work.sum
