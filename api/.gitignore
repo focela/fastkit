@@ -1,0 +1,71 @@
+# CORE SYSTEM AND TEMPORARY FILES
+.orig
+.swp
+.hgignore.swp
+**/.DS_Store
+
+# DEVELOPMENT ENVIRONMENTS AND TOOLS
+# IDE and editor configurations
+.buildpath
+.project
+.settings/
+.vscode/
+.idea/
+.idea
+
+# Go dependency management
+vendor/
+composer.lock
+go.work
+go.work.sum
+
+# BUILD ARTIFACTS AND BINARIES
+# Executables
+*.exe
+*.exe~
+main
+main.exe
+main.exe~
+
+# Go-specific artifacts
+*.dll
+*.so
+*.dylib
+*.test      # Test binary built with `go test -c`
+*.out       # Output from go coverage tool
+cbuild
+pkg/
+
+# Output files
+*.log
+*.zip
+*.lock
+
+# PROJECT SPECIFIC DIRECTORIES AND FILES
+# Test and binary directories
+/test/
+/bin/package.sh
+internal/packed/packed.go
+
+# Generated content and logs
+output/
+logs/
+temp/
+
+# Configuration and resources
+manifest/config/config.yaml
+manifest/output/
+resource/log/
+resource/public/admin/
+resource/public/attachment/
+
+# Storage
+storage/cache/
+storage/diskqueue/
+storage/cert/ssl/server.crt
+storage/cert/ssl/server.key
+storage/cert/pay/alipay/
+storage/cert/pay/wxpay/
+
+# EXCEPTIONS - FILES TO INCLUDE DESPITE MATCHING PATTERNS ABOVE
+!fastkit/
