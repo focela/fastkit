@@ -1,0 +1,37 @@
+# -----------------------------------------------------------------------------
+# Core Configuration
+# -----------------------------------------------------------------------------
+
+# Default logger configuration anchor
+# Defines base settings used by all logger configurations
+defaultLogger: &defaultLogger
+  # Logging behavior
+  level: "all"                # Capture logs of all severity levels
+  flags: 42                   # Standard Go log flags for timestamps and file info
+
+  # File rotation settings
+  file: "{Y-m-d}.log"         # Daily log files with date in filename
+  rotateExpire: "7d"          # Delete logs older than 7 days
+  rotateBackupLimit: 2        # Keep maximum 2 backup files
+  rotateBackupCompress: 2     # Use moderate compression (scale 0-9)
+
+  # Output formatting
+  stdoutColorDisabled: false  # Enable colored console output
+  writerColorEnable: false    # Disable color codes in log files
+
+# -----------------------------------------------------------------------------
+# Database Configuration
+# -----------------------------------------------------------------------------
+database:
+  # Database operation logging
+  logger:
+    path: "logs/database"     # Store database logs in this directory
+    stdout: true              # Also output database logs to console
+    <<: *defaultLogger        # Inherit default logger settings
+
+  # Primary database connection
+  default:
+    # Connection string with proper formatting for readability
+    link: "mysql:username:password@tcp(127.0.0.1:3306)/fastkit?loc=Local&parseTime=true&charset=utf8mb4"
+    debug: true               # Enable SQL query logging (disable in production)
+    prefix: "fk_"             # Prefix for all database tables
