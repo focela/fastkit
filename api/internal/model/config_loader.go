@@ -5,14 +5,29 @@
 // Package model provides data structures and operations for the application's data layer.
 package model
 
-// ServeLogConfig defines service logging configuration.
-type ServeLogConfig struct {
-	// Switch enables/disables logging
+// LogConfig defines general logging configuration settings.
+type LogConfig struct {
+	// Switch enables or disables the logging functionality.
 	Switch bool `json:"switch"`
 
-	// Queue enables queue-based processing
+	// Queue enables queue-based log processing for improved performance.
 	Queue bool `json:"queue"`
 
-	// LevelFormat defines format for different log levels
+	// Module specifies which modules should be logged.
+	Module []string `json:"module"`
+
+	// SkipCode defines error codes that should be ignored during logging.
+	SkipCode []string `json:"skipCode"`
+}
+
+// ServeLogConfig defines service-specific logging configuration.
+type ServeLogConfig struct {
+	// Switch enables or disables service logging.
+	Switch bool `json:"switch"`
+
+	// Queue enables queue-based processing for service logs.
+	Queue bool `json:"queue"`
+
+	// LevelFormat defines format specifications for different log levels.
 	LevelFormat []string `json:"levelFormat"`
 }
