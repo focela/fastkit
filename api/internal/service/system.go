@@ -11,6 +11,10 @@ import (
 	"fastkit/internal/model"
 )
 
+var (
+	localSystemConfig SystemConfig
+)
+
 type (
 	// SystemConfig defines interfaces for system configuration.
 	SystemConfig interface {
@@ -18,3 +22,12 @@ type (
 		GetServerLogConfig(ctx context.Context) (*model.ServeLogConfig, error)
 	}
 )
+
+// GetSystemConfig returns the registered SystemConfig implementation.
+// It panics if no implementation has been registered.
+func GetSystemConfig() SystemConfig {
+	if localSystemConfig == nil {
+		panic("implement not found for interface SystemConfig, forgot register?")
+	}
+	return localSystemConfig
+}
