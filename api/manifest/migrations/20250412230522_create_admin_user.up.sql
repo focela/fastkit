@@ -1,11 +1,11 @@
 -- Enable UUID functionality
-CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+CREATE EXTENSION IF NOT EXISTS "pgcrypto";
 
 -- Create administrator users table
 CREATE TABLE admin_user
 (
     -- Primary identification
-    id                   UUID PRIMARY KEY      DEFAULT uuid_generate_v4(),
+    id                   UUID PRIMARY KEY      DEFAULT gen_random_uuid(),
 
     -- Organizational relationships
     dept_id              UUID                  DEFAULT NULL,
